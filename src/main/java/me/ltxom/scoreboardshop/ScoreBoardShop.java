@@ -46,10 +46,15 @@ public class ScoreBoardShop extends JavaPlugin {
 				getHelp(sender);
 				return true;
 			}
-			if (args[0].equals("link") && sender.hasPermission("me.ltxom.sbs.link")) {
+			if (args[0].equals("link")) {
 				if (args[1].equals("list")) {
-					// list all links
-				} else {
+					if (sender.hasPermission("me.ltxom.sbs.link")) {
+						// list all links
+					} else {
+						// prompt no permission
+					}
+
+				} else if (sender.hasPermission("me.ltxom.sbs.link")) {
 					String scoreboardVar = args[2];
 					String displayName = args[3];
 					if (scoreboardVar != null && displayName != null && !scoreboardVar.isEmpty() && !displayName.isEmpty()) {
@@ -63,6 +68,8 @@ public class ScoreBoardShop extends JavaPlugin {
 					} else {
 						// command doesn't have valid args
 					}
+				} else {
+					// prompt no permission
 				}
 			}
 		}
