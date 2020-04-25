@@ -1,14 +1,17 @@
 package me.ltxom.scoreboardshop;
 
+import me.ltxom.scoreboardshop.gui.ShopInventory;
 import me.ltxom.scoreboardshop.service.PromptService;
 import me.ltxom.scoreboardshop.service.ScoreboardLinkService;
 import me.ltxom.scoreboardshop.service.ShopService;
 import me.ltxom.scoreboardshop.util.ResultCode;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.ScoreboardManager;
 
@@ -28,6 +31,7 @@ public class ScoreBoardShop extends JavaPlugin {
 	private static ScoreboardLinkService scoreboardLinkService;
 	private static PromptService promptService;
 	private static ShopService shopService;
+	private static ShopInventory shopInventory;
 
 	private void loadConfig() {
 		getLogger().info(PREFIX + "Loading configuration...");
@@ -72,6 +76,10 @@ public class ScoreBoardShop extends JavaPlugin {
 
 		shopService = new ShopService(scoreboardConfig, scoreboardManager,
 				scoreboardConfigFile, languageConfig, shopConfig, shopConfigFile);
+
+		shopInventory = new ShopInventory(languageConfig, shopConfig, Bukkit.getServer());
+
+		Bukkit.getPluginManager().registerEvents(shopInventory, this);
 	}
 
 	@Override
@@ -150,22 +158,28 @@ public class ScoreBoardShop extends JavaPlugin {
 				} else if (args[0].equals("category")) {
 					if (args[1].equals("create")) {
 						if (sender.hasPermission("me.ltxom.sbs.category.create")) {
-							// How do you want to handle unexpected inputs?
 							// Create a category
 							String categoryName = args[2];
 							String displayName = args[3];
 							String displayItem = args[4];
-							ResultCode resultCode = shopService.createCategory(categoryName, displayName, displayItem);
-							switch (resultCode) {
-								case CODE_OK:
-									promptService.createdCategory(sender);
-									break;
-								case EXIST:
-									promptService.fieldExist(sender);
-									break;
-								case IO_EXCEPTION:
-									promptService.exception(sender);
-									break;
+							Material displayMaterial = Material.getMaterial(displayItem);
+							if (displayMaterial == null) {
+								promptService.materialDNE(sender);
+							} else {
+								ResultCode resultCode = shopService.createCategory(categoryName, displayName,
+										displayItem);
+								switch (resultCode) {
+									case CODE_OK:
+										shopInventory.reloadGui();
+										promptService.createdCategory(sender);
+										break;
+									case EXIST:
+										promptService.fieldExist(sender);
+										break;
+									case IO_EXCEPTION:
+										promptService.exception(sender);
+										break;
+								}
 							}
 						} else {
 							// prompt no permission
@@ -178,6 +192,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							ResultCode resultCode = shopService.removeCategory(categoryName);
 							switch (resultCode) {
 								case CODE_OK:
+									shopInventory.reloadGui();
 									promptService.removedCategory(sender);
 									break;
 								case DNE:
@@ -189,8 +204,9 @@ public class ScoreBoardShop extends JavaPlugin {
 							promptService.noPermission(sender);
 						}
 					} else if (args[1].equals("list")) {
-						if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
+						if (sender.hasPermission("me.ltxom.sbs.category.list")) {
 							// List all categories
+							shopService.listCategories(sender);
 						} else {
 							// prompt no permission
 							promptService.noPermission(sender);
@@ -236,7 +252,12 @@ public class ScoreBoardShop extends JavaPlugin {
 					}
 				} else if (args[0].equals("shop")) {
 					if (sender.hasPermission("me.ltxom.sbs.shop")) {
-						// Show the shop
+						if (sender instanceof Player) {
+							Player player = (Player) sender;
+							shopInventory.openInventory(player);
+						} else {
+							promptService.onlyInGame(sender);
+						}
 					} else {
 						// prompt no permission
 						promptService.noPermission(sender);
@@ -246,6 +267,7 @@ public class ScoreBoardShop extends JavaPlugin {
 					promptService.commandInvalid(sender);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
+				e.printStackTrace();
 				promptService.commandInvalid(sender);
 			}
 		}

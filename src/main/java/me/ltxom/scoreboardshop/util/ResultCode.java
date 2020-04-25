@@ -49,4 +49,3 @@ public enum ResultCode {
 		return ResultCode.CODE_OK;
 	}
 }
-}

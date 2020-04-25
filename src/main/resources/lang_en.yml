@@ -8,9 +8,12 @@ category-created: Successfully created new category!
 field-exist: Category already exists.
 category-removed: Successfully removed category!
 category-dne: Category does not exist!
-
+only-ingame: This command can be only executed in game
+material-dne: The given material is not valid. (Type /itemdb to check item name)
 scoreboard-var: Scoreboard variable
 display-name: Display name
+category-name: Category
+close: Close
 
 link-help: Link Minecraft scoreboard with scoreboard shop by given variable name and display name
 unlink-help: Unlink Minecraft scoreboard with scoreboard shop

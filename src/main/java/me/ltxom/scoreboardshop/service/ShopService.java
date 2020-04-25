@@ -1,10 +1,13 @@
 package me.ltxom.scoreboardshop.service;
 
 import me.ltxom.scoreboardshop.util.ResultCode;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
+import java.util.Set;
 
 public class ShopService {
 	private FileConfiguration scoreboardConfig;
@@ -40,6 +43,18 @@ public class ShopService {
 		}
 		shopConfig.set(categoryName, null);
 		return ResultCode.CODE_OK;
+	}
+
+	public void listCategories(CommandSender sender) {
+		Set<String> keys = shopConfig.getKeys(false);
+		for (String key : keys) {
+			String displayName = shopConfig.get(key + ".display_name").toString();
+			TextComponent textComponent =
+					new TextComponent("§a" + languageConfig.get("category-name") + ": §b" + key +
+							"    §a" + languageConfig.get("display-name") + ": §r" + displayName
+					);
+			sender.spigot().sendMessage(textComponent);
+		}
 	}
 }
 

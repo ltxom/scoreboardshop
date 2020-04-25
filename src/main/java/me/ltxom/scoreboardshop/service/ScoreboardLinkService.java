@@ -40,7 +40,7 @@ public class ScoreboardLinkService {
 	}
 
 	public void listAllLinks(CommandSender sender) {
-		Set<String> keys = scoreboardConfig.getKeys(true);
+		Set<String> keys = scoreboardConfig.getKeys(false);
 		for (String key : keys) {
 			String value = scoreboardConfig.get(key).toString();
 			TextComponent textComponent =

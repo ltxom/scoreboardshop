@@ -217,4 +217,16 @@ public class PromptService {
 				"category-dne"));
 		sender.spigot().sendMessage(textComponent);
 	}
+
+	public void onlyInGame(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"only-ingame"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void materialDNE(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"material-dne"));
+		sender.spigot().sendMessage(textComponent);
+	}
 }
