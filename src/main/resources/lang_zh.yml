@@ -1,0 +1,15 @@
+no-permission: 你没有%permission%权限
+
+link-help: 使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称
+unlink-help: 使Minecraft scoreboard与scoreboard shop变量取消连接
+link-list-help: 显示已建立的连接
+category-create-help: 创建商店中的类别，通过指定的显示名称与显示物品
+category-remove-help: 移除商店中的类别，类别下的物品也会被移除
+category-list-help: 显示所有类别，包括其类别名称、显示名称
+item-create-help: 创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性
+item-create-hand-help: 从手中的物品创建并指定数量
+item-create-command-help: 执行任意指令，使用%p%代表玩家名
+item-list-help: 显示指定种类下所有的物品，包括物品id、scoreboard变量、价格、物品种类、以及附加属性
+item-remove-help: 移除指定种类下的物品
+reload-help: 重载插件
+shop-help: 显示scoreboardshop商店
