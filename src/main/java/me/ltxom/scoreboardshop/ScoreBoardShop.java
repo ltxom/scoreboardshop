@@ -88,9 +88,9 @@ public class ScoreBoardShop extends JavaPlugin {
 
                 } else if (sender.hasPermission("me.ltxom.sbs.link")) {
                     String scoreboardVar = args[2];
-                    String displayName = args[3];
+                    String displayName = args[3];           // OutOfBound?
                     if (scoreboardVar != null && displayName != null && !scoreboardVar.isEmpty() && !displayName.isEmpty()) {
-                        // check if the scoreborad variable exist
+                        // check if the scoreboard variable exist
                         try {
                             Objective objective =
                                     scoreboardManager.getMainScoreboard().getObjective(scoreboardVar);
@@ -104,23 +104,33 @@ public class ScoreBoardShop extends JavaPlugin {
                 } else {
                     // prompt no permission
                 }
-            } else if (args[0].equals("unlink")){
+            } else if (args[0].equals("unlink")) {
                 if (sender.hasPermission("me.ltxom.sbs.unlink")) {
                     // unlink
                 } else {
                     // prompt no permission
                 }
-            } else if (args[0].equals("category")){
+            } else if (args[0].equals("category")) {
                 if (args[1].equals("create")) {
                     if (sender.hasPermission("me.ltxom.sbs.category.create")) {
+                        // How do you want to handle unexpected inputs?
                         // Create a category
+                        var categoryName = args[2];
+                        var displayName = args[3];
+                        var displayItem = args[4];
                     } else {
                         // prompt no permission
                     }
-                }
-                else if(args[1].equals("remove")){
+                } else if (args[1].equals("remove")) {
                     if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
                         // Remove a category
+                        var categoryName = args[2];
+                    } else {
+                        // prompt no permission
+                    }
+                } else if (args[1].equals("list")) {
+                    if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
+                        // List all categories
                     } else {
                         // prompt no permission
                     }
@@ -129,28 +139,50 @@ public class ScoreBoardShop extends JavaPlugin {
                 if (args[1].equals("create")) {
                     if (sender.hasPermission("me.ltxom.sbs.item.create")) {
                         // Create an item
+                        var categoryName = args[2];
+                        var scoreboardVarName = args[3];
+                        var price = Integer.parseInt(args[4]);
+                        var itemType = args[5];
+                        var itemDesc = args[6];
                     } else {
                         // prompt no permission
                     }
                 } else if (args[1].equals("list")) {
                     if (sender.hasPermission("me.ltxom.sbs.item.list")) {
                         // List an item
+                        var categoryName = args[2];
                     } else {
                         // prompt no permission
                     }
                 } else if (args[1].equals("remove")) {
                     if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
                         // Remove an item
+                        var categoryName = args[2];
+                        var itemID = Integer.parseInt(args[3]);
                     } else {
                         // prompt no permission
                     }
                 }
+            } else if (args[0].equals("reload")) {
+                if (sender.hasPermission("me.ltxom.sbs.reload")) {
+                    // Reload
+                } else {
+                    // prompt no permission
+                }
+            } else if (args[0].equals("shop")) {
+                if (sender.hasPermission("me.ltxom.sbs.shop")) {
+                    // Show the shop
+                } else {
+                    // prompt no permission
+                }
+            } else {
+                // Incorrect command || No Permission
             }
         }
 
-        return true;
-    }
+            return true;
 
+    }
     private void hasPermission(){
 
     }
@@ -299,3 +331,4 @@ public class ScoreBoardShop extends JavaPlugin {
 
     }
 }
+

@@ -5,7 +5,7 @@
       <map />
     </option>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14_PREVIEW">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -25,5 +25,78 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/api/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/api/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/bootstrap/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/chat/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/chat/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/config/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/config/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/event/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/event/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/log/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/cmd-alert/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/cmd-find/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/cmd-list/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/cmd-send/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/cmd-server/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/module/reconnect-yaml/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/native/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/native/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/protocol/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/protocol/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/proxy/src/main/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/proxy/src/test/java" />
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord-master.zip!/BungeeCord-master/query/src/main/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/BungeeCord.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/craftbukkit-1.15.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Downloads/craftbukkit-1.15.2.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/BungeeCord.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/craftbukkit-1.15.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/lib/craftbukkit-1.15.2.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
