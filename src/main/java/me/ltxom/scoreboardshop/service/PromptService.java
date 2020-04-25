@@ -187,4 +187,34 @@ public class PromptService {
 				"exception"));
 		sender.spigot().sendMessage(textComponent);
 	}
+
+	public void unlinked(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"unlinked"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void createdCategory(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"category-created"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void fieldExist(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"field-exist"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void removedCategory(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"category-removed"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void categoryDNE(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"category-dne"));
+		sender.spigot().sendMessage(textComponent);
+	}
 }

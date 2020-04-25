@@ -2,6 +2,7 @@ package me.ltxom.scoreboardshop;
 
 import me.ltxom.scoreboardshop.service.PromptService;
 import me.ltxom.scoreboardshop.service.ScoreboardLinkService;
+import me.ltxom.scoreboardshop.service.ShopService;
 import me.ltxom.scoreboardshop.util.ResultCode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,13 +18,16 @@ import java.util.Objects;
 public class ScoreBoardShop extends JavaPlugin {
 
 	private static final String PREFIX = "[ScoreBoardShop]";
-	public static FileConfiguration config;
-	public static FileConfiguration languageConfig;
-	public static FileConfiguration scoreboardConfig;
-	public static File scoreboardConfigFile;
+	private static FileConfiguration config;
+	private static FileConfiguration languageConfig;
+	private static FileConfiguration scoreboardConfig;
+	private static FileConfiguration shopConfig;
+	private static File shopConfigFile;
+	private static File scoreboardConfigFile;
 	private static ScoreboardManager scoreboardManager;
 	private static ScoreboardLinkService scoreboardLinkService;
 	private static PromptService promptService;
+	private static ShopService shopService;
 
 	private void loadConfig() {
 		getLogger().info(PREFIX + "Loading configuration...");
@@ -54,10 +58,20 @@ public class ScoreBoardShop extends JavaPlugin {
 		}
 		scoreboardConfig = YamlConfiguration.loadConfiguration(scoreboardConfigFile);
 
+		shopConfigFile = new File(getDataFolder(), "shop.yml");
+		if (!shopConfigFile.exists()) {
+			saveResource("shop.yml", false);
+		}
+		shopConfig = YamlConfiguration.loadConfiguration(shopConfigFile);
+
 		scoreboardManager = Bukkit.getScoreboardManager();
 
-		scoreboardLinkService = new ScoreboardLinkService(scoreboardConfig, scoreboardConfigFile, scoreboardManager);
+		scoreboardLinkService = new ScoreboardLinkService(scoreboardConfig, scoreboardConfigFile, scoreboardManager,
+				languageConfig);
 		promptService = new PromptService(languageConfig);
+
+		shopService = new ShopService(scoreboardConfig, scoreboardManager,
+				scoreboardConfigFile, languageConfig, shopConfig, shopConfigFile);
 	}
 
 	@Override
@@ -112,8 +126,26 @@ public class ScoreBoardShop extends JavaPlugin {
 				} else if (args[0].equals("unlink")) {
 					if (sender.hasPermission("me.ltxom.sbs.unlink")) {
 						// unlink
+						try {
+							String scoreboardVar = args[1];
+							ResultCode resultCode = scoreboardLinkService.unlink(scoreboardVar);
+							switch (resultCode) {
+								case CODE_OK:
+									promptService.unlinked(sender);
+									break;
+								case DNE:
+									promptService.scoreboardDNE(sender);
+									break;
+							}
+						} catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+							// prompt not valid command
+							promptService.commandInvalid(sender);
+						}
+
+
 					} else {
 						// prompt no permission
+						promptService.noPermission(sender);
 					}
 				} else if (args[0].equals("category")) {
 					if (args[1].equals("create")) {
@@ -123,21 +155,45 @@ public class ScoreBoardShop extends JavaPlugin {
 							String categoryName = args[2];
 							String displayName = args[3];
 							String displayItem = args[4];
+							ResultCode resultCode = shopService.createCategory(categoryName, displayName, displayItem);
+							switch (resultCode) {
+								case CODE_OK:
+									promptService.createdCategory(sender);
+									break;
+								case EXIST:
+									promptService.fieldExist(sender);
+									break;
+								case IO_EXCEPTION:
+									promptService.exception(sender);
+									break;
+							}
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					} else if (args[1].equals("remove")) {
 						if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
 							// Remove a category
 							String categoryName = args[2];
+							ResultCode resultCode = shopService.removeCategory(categoryName);
+							switch (resultCode) {
+								case CODE_OK:
+									promptService.removedCategory(sender);
+									break;
+								case DNE:
+									promptService.categoryDNE(sender);
+									break;
+							}
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					} else if (args[1].equals("list")) {
 						if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
 							// List all categories
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					}
 				} else if (args[0].equals("item")) {
@@ -151,6 +207,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							String itemDesc = args[6];
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					} else if (args[1].equals("list")) {
 						if (sender.hasPermission("me.ltxom.sbs.item.list")) {
@@ -158,6 +215,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							String categoryName = args[2];
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					} else if (args[1].equals("remove")) {
 						if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
@@ -166,6 +224,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							Integer itemID = Integer.parseInt(args[3]);
 						} else {
 							// prompt no permission
+							promptService.noPermission(sender);
 						}
 					}
 				} else if (args[0].equals("reload")) {
@@ -173,15 +232,18 @@ public class ScoreBoardShop extends JavaPlugin {
 						// Reload
 					} else {
 						// prompt no permission
+						promptService.noPermission(sender);
 					}
 				} else if (args[0].equals("shop")) {
 					if (sender.hasPermission("me.ltxom.sbs.shop")) {
 						// Show the shop
 					} else {
 						// prompt no permission
+						promptService.noPermission(sender);
 					}
 				} else {
 					// Incorrect command || No Permission
+					promptService.commandInvalid(sender);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				promptService.commandInvalid(sender);

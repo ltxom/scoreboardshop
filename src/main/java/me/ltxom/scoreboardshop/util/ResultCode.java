@@ -1,11 +1,18 @@
 package me.ltxom.scoreboardshop.util;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+
 public enum ResultCode {
 
 	CODE_OK(200, "Success"),
 	ERROR(404, "Error"),
 	SCOREBOARD_DNE(405, "Scoreboard doesn't exist"),
-	IO_EXCEPTION(406, "IO Exception")
+	IO_EXCEPTION(406, "IO Exception"),
+	DNE(407, "DNE"),
+	EXIST(408, "Field already exist")
 	;
 
 	private Integer code;
@@ -31,4 +38,15 @@ public enum ResultCode {
 	public String toString() {
 		return "code:" + code + ", msg" + msg;
 	}
+
+	public static ResultCode saveConfigWithResultCode(FileConfiguration shopConfig, File shopConfigFile) {
+		try {
+			shopConfig.save(shopConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResultCode.IO_EXCEPTION;
+		}
+		return ResultCode.CODE_OK;
+	}
+}
 }

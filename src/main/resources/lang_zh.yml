@@ -3,6 +3,14 @@ exception: 发生了内部异常，请检查控制台记录来获取详细信息
 scoreboard-DNE: 指定的Scoreboard不存在
 command-invalid: 指令或指令的参数不正确
 linked-scoreboard: 成功与Scoreboard变量建立连接
+unlinked: 成功取消建立连接
+category-created: 成功新建种类
+field-exist: 创建失败，该种类已经存在
+category-removed: 成功移除种类
+category-dne: 指定的种类不存在
+
+scoreboard-var: Scoreboard变量
+display-name: 显示名称
 
 link-help: 使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称
 unlink-help: 使Minecraft scoreboard与scoreboard shop变量取消连接

@@ -15,12 +15,14 @@ public class ScoreboardLinkService {
 	private FileConfiguration scoreboardConfig;
 	private ScoreboardManager scoreboardManager;
 	private File scoreboardConfigFile;
+	private FileConfiguration languageConfig;
 
 	public ScoreboardLinkService(FileConfiguration scoreboardConfig, File scoreboardConfigFile,
-								 ScoreboardManager scoreboardManager) {
+								 ScoreboardManager scoreboardManager, FileConfiguration languageConfig) {
 		this.scoreboardConfig = scoreboardConfig;
 		this.scoreboardManager = scoreboardManager;
 		this.scoreboardConfigFile = scoreboardConfigFile;
+		this.languageConfig = languageConfig;
 	}
 
 	public boolean scoreboardExist(String scoreboardVar) {
@@ -34,13 +36,7 @@ public class ScoreboardLinkService {
 			return ResultCode.SCOREBOARD_DNE;
 		}
 		scoreboardConfig.set(scoreboardVar, displayName);
-		try {
-			scoreboardConfig.save(scoreboardConfigFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return ResultCode.IO_EXCEPTION;
-		}
-		return ResultCode.CODE_OK;
+		return ResultCode.saveConfigWithResultCode(scoreboardConfig, scoreboardConfigFile);
 	}
 
 	public void listAllLinks(CommandSender sender) {
@@ -48,9 +44,16 @@ public class ScoreboardLinkService {
 		for (String key : keys) {
 			String value = scoreboardConfig.get(key).toString();
 			TextComponent textComponent =
-					new TextComponent("§aScoreboard variable: §b" + key + "\t§aDisplay name: §r" + value);
+					new TextComponent("§a" + languageConfig.get("scoreboard-var") + ": §b" + key + "    §a" + languageConfig.get("display-name") + ": §r" + value);
 			sender.spigot().sendMessage(textComponent);
 		}
 	}
 
+	public ResultCode unlink(String scoreboardVar) {
+		if (!scoreboardConfig.contains(scoreboardVar)) {
+			return ResultCode.DNE;
+		}
+		scoreboardConfig.set(scoreboardVar, null);
+		return ResultCode.CODE_OK;
+	}
 }

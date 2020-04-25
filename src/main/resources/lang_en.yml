@@ -3,6 +3,14 @@ exception: An internal exception occurs, please check the console log for more d
 scoreboard-DNE: The given scoreboard does not exist.
 command-invalid: Command or argument is not valid.
 linked-scoreboard: Successfully linked scoreboard with SBS!
+unlinked: Successfully unlinked scoreboard with SBS!
+category-created: Successfully created new category!
+field-exist: Category already exists.
+category-removed: Successfully removed category!
+category-dne: Category does not exist!
+
+scoreboard-var: Scoreboard variable
+display-name: Display name
 
 link-help: Link Minecraft scoreboard with scoreboard shop by given variable name and display name
 unlink-help: Unlink Minecraft scoreboard with scoreboard shop
