@@ -104,11 +104,61 @@ public class ScoreBoardShop extends JavaPlugin {
                 } else {
                     // prompt no permission
                 }
+            } else if (args[0].equals("unlink")){
+                if (sender.hasPermission("me.ltxom.sbs.unlink")) {
+                    // unlink
+                } else {
+                    // prompt no permission
+                }
+            } else if (args[0].equals("category")){
+                if (args[1].equals("create")) {
+                    if (sender.hasPermission("me.ltxom.sbs.category.create")) {
+                        // Create a category
+                    } else {
+                        // prompt no permission
+                    }
+                }
+                else if(args[1].equals("remove")){
+                    if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
+                        // Remove a category
+                    } else {
+                        // prompt no permission
+                    }
+                }
+            } else if (args[0].equals("item")) {
+                if (args[1].equals("create")) {
+                    if (sender.hasPermission("me.ltxom.sbs.item.create")) {
+                        // Create an item
+                    } else {
+                        // prompt no permission
+                    }
+                } else if (args[1].equals("list")) {
+                    if (sender.hasPermission("me.ltxom.sbs.item.list")) {
+                        // List an item
+                    } else {
+                        // prompt no permission
+                    }
+                } else if (args[1].equals("remove")) {
+                    if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
+                        // Remove an item
+                    } else {
+                        // prompt no permission
+                    }
+                }
             }
         }
 
         return true;
     }
+
+    private void hasPermission(){
+
+    }
+
+    private void noPermission(){
+
+    }
+
 
     private void getHelp(CommandSender sender) {
         List<TextComponent> toSendList = new LinkedList<>();
