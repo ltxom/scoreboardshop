@@ -1,175 +1,251 @@
 package me.ltxom.scoreboardshop;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.ScoreboardManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+
 public class ScoreBoardShop extends JavaPlugin {
 
-	private static final String PREFIX = "[ScoreBoardShop}";
-	public static FileConfiguration config;
-	private static ScoreboardManager scoreboardManager;
+    private static final String PREFIX = "[ScoreBoardShop]";
+    public static FileConfiguration config;
+    public static FileConfiguration languageConfig = new YamlConfiguration();
+    ;
+    private static ScoreboardManager scoreboardManager;
 
-	private void loadConfig() {
-		getLogger().info(PREFIX + "Loading configuration...");
-		config = getConfig();
-		if (!getDataFolder().exists()) getDataFolder().mkdirs();
-		saveDefaultConfig();
-	}
+    private void loadConfig() {
+        getLogger().info(PREFIX + "Loading configuration...");
+        config = getConfig();
+        if (!getDataFolder().exists()) getDataFolder().mkdirs();
+        saveDefaultConfig();
+        if (Objects.requireNonNull(config.get("language")).toString().toLowerCase().equals(
+                "chinese")) {
+            try {
+                languageConfig.load(new File(getDataFolder(), "lang_zh.yml"));
+            } catch (IOException | InvalidConfigurationException e) {
+                getLogger().info(e.toString());
+                getLogger().info(PREFIX + "Error while loading the configurations");
+            }
+        } else {
+            try {
+                languageConfig.load(new File(getDataFolder(), "lang_en.yml"));
+            } catch (IOException | InvalidConfigurationException e) {
+                getLogger().info(e.toString());
+                getLogger().info(PREFIX + "Error while loading the configurations");
+            }
+        }
+    }
 
-	@Override
-	public void onEnable() {
-		loadConfig();
+    @Override
+    public void onEnable() {
+        loadConfig();
 
-		Bukkit.getPluginCommand("sbs").setExecutor(this);
-		scoreboardManager = Bukkit.getScoreboardManager();
-		getLogger().info(" ");
-		getLogger().info(">>>>>>>>>>>>>>>>>>>>>>>> ScoreBoardShop is Initialized <<<<<<<<<<<<<<<<<<<<<<<<");
-		getLogger().info(">>>>> Author: ltxom <<<<<");
-		getLogger().info(" ");
-	}
+        Bukkit.getPluginCommand("sbs").setExecutor(this);
+        scoreboardManager = Bukkit.getScoreboardManager();
+        getLogger().info(" ");
+        getLogger().info(">>>>>>>>>>>>>>>>>>>>>>>> ScoreBoardShop is Initialized " +
+                "<<<<<<<<<<<<<<<<<<<<<<<<");
+        getLogger().info(">>>>> Author: ltxom <<<<<");
+        getLogger().info(" ");
+    }
 
-	@Override
-	public void onDisable() {
+    @Override
+    public void onDisable() {
 
-	}
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if ("sbs".equalsIgnoreCase(command.getName())) {
-			if (args.length == 0) {
-				getHelp(sender);
-				return true;
-			}
-			if (args[0].equals("link")) {
-				if (args[1].equals("list")) {
-					if (sender.hasPermission("me.ltxom.sbs.link")) {
-						// list all links
-					} else {
-						// prompt no permission
-					}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label,
+                             String[] args) {
+        if ("sbs".equalsIgnoreCase(command.getName())) {
+            if (args.length == 0) {
+                getHelp(sender);
+                return true;
+            }
+            if (args[0].equals("link")) {
+                if (args[1].equals("list")) {
+                    if (sender.hasPermission("me.ltxom.sbs.link")) {
+                        // list all links
+                    } else {
+                        // prompt no permission
+                    }
 
-				} else if (sender.hasPermission("me.ltxom.sbs.link")) {
-					String scoreboardVar = args[2];
-					String displayName = args[3];
-					if (scoreboardVar != null && displayName != null && !scoreboardVar.isEmpty() && !displayName.isEmpty()) {
-						// check if the scoreborad variable exist
-						try {
-							Objective objective = scoreboardManager.getMainScoreboard().getObjective(scoreboardVar);
+                } else if (sender.hasPermission("me.ltxom.sbs.link")) {
+                    String scoreboardVar = args[2];
+                    String displayName = args[3];
+                    if (scoreboardVar != null && displayName != null && !scoreboardVar.isEmpty() && !displayName.isEmpty()) {
+                        // check if the scoreborad variable exist
+                        try {
+                            Objective objective =
+                                    scoreboardManager.getMainScoreboard().getObjective(scoreboardVar);
 
-						} catch (IllegalArgumentException e) {
-							// the scoreboard variable is not exist
-						}
-					} else {
-						// command doesn't have valid args
-					}
-				} else {
-					// prompt no permission
-					noPermission();
-				}
-			} else if (args[0].equals("unlink")){
-				if (sender.hasPermission("me.ltxom.sbs.unlink")) {
-					// unlink
-				} else {
-					// prompt no permission
-				}
-			} else if (args[0].equals("category")){
-				if (args[1].equals("create")) {
-					if (sender.hasPermission("me.ltxom.sbs.category.create")) {
-						// Create a category
-					} else {
-						// prompt no permission
-					}
-				}
-				else if(args[1].equals("remove")){
-					if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
-						// Remove a category
-					} else {
-						// prompt no permission
-					}
-				}
-			} else if (args[0].equals("item")){
-				if (args[1].equals("create")){
-					if (sender.hasPermission("me.ltxom.sbs.item.create")) {
-						// Create an item
-					} else {
-						// prompt no permission
-					}
-				} else if (args[1].equals("list")){
-					if (sender.hasPermission("me.ltxom.sbs.item.list")) {
-						// List an item
-					} else {
-						// prompt no permission
-					}
-				} else if (args[1].equals("remove")){
-					if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
-						// Remove an item
-					} else {
-						// prompt no permission
-					}
-				}
-			}
-		}
+                        } catch (IllegalArgumentException e) {
+                            // the scoreboard variable is not exist
+                        }
+                    } else {
+                        // command doesn't have valid args
+                    }
+                } else {
+                    // prompt no permission
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
+    private void getHelp(CommandSender sender) {
+        List<TextComponent> toSendList = new LinkedList<>();
+        if (sender.hasPermission("me.ltxom.sbs.link")) {
+            TextComponent textComponent = new TextComponent("/sbs link  " + languageConfig.get(
+                    "link-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs link"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "link-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.unlink")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs unlink  " + languageConfig.get(
+                    "unlink-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs unlink"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "unlink-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.link.list")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs link list  " + languageConfig.get(
+                    "link-list-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs link list"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "link-list-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.category.create")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs category create  " + languageConfig.get(
+                    "category-create-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs category create"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "category-create-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs category remove  " + languageConfig.get(
+                    "category-remove-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs category remove"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "category-remove-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.category.list")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs category list  " + languageConfig.get(
+                    "category-list-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs category list"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "category-list-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.category.item.create")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs item create  " + languageConfig.get(
+                    "item-create-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs item create"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "item-create-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
 
-	private void hasPermission(){
+        }
+        if (sender.hasPermission("me.ltxom.sbs.item.list")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs item list  " + languageConfig.get(
+                    "item-list-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs item list"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "item-list-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs item remove  " + languageConfig.get(
+                    "item-remove-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs item remove"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "item-remove-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.reload")) {
+            TextComponent textComponent =
+                    new TextComponent("/sbs reload  " + languageConfig.get(
+                    "reload-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs reload"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "reload-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        if (sender.hasPermission("me.ltxom.sbs.shop")) {
+            TextComponent textComponent = new TextComponent("/sbs shop  " + languageConfig.get(
+                    "shop-help"));
+            textComponent.setColor(ChatColor.GRAY);
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                    "/sbs shop"));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder((String) languageConfig.get(
+                            "shop-help")).color(ChatColor.BLUE).create()));
+            toSendList.add(textComponent);
+        }
+        for (TextComponent textComponent : toSendList) {
+            sender.spigot().sendMessage(textComponent);
+        }
 
-	}
-
-	private void noPermission(){
-
-	}
-
-	private void getHelp(CommandSender sender) {
-		// TODO 多语言支持、优化颜色、
-		TextComponent help = new TextComponent("简介\n" +
-				"\n" +
-				"与Minecraft内置Scoreboard积分板结合的商店插件。\n" +
-				"\n" +
-				"TODO (括号内为权限节点)\n" +
-				"\n" +
-				"管理员\n" +
-				"\n" +
-				"scoreboard：\n" +
-				"\n" +
-				"/scoreboardshop:sbs link [scoreboard variable name] [display name]：使Minecraft scoreboard与scoreboard" +
-				" " +
-				"shop变量连接，并赋予显示名称(me.ltxom.sbs.link)\n" +
-				"/scoreboardshop:sbs unlink [scoreboard variable name]：使Minecraft scoreboard与scoreboard shop变量取消连接" +
-				"(me" +
-				".ltxom.sbs.link.unlink)\n" +
-				"/scoreboardshop:sbs link list：显示已建立的连接(me.ltxom.sbs.link.list)\n" +
-				"商店：\n" +
-				"\n" +
-				"/scoreboardshop:sbs category create [category name] [display name] [display " +
-				"item]：创建商店中的类别，通过指定的显示名称与显示物品(me.ltxom.sbs.category.create)\n" +
-				"/scoreboardshop:sbs category remove [category name]：移除商店中的类别，类别下的物品也会被移除(me.ltxom.sbs.category" +
-				".remove)\n" +
-				"/scoreboardshop:sbs category list：显示所有类别，包括其类别名称、显示名称\n" +
-				"/scoreboardshop:sbs item create [category name] [scoreboard variable name] [price] [item type] " +
-				"[item" +
-				" " +
-				"desc]：创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性(me.ltxom.sbs.item.create)\n" +
-				"物品种类[item type]以及其附加属性[item desc]\n" +
-				"[HAND] [NUMBER]：从手中的物品创建并指定数量\n" +
-				"[Command]：执行任意指令，使用%p%代表玩家名\n" +
-				"/scoreboardshop:sbs item list [category name]：显示指定种类下所有的物品，包括物品id、scoreboard变量、价格、物品种类、以及附加属性(me" +
-				".ltxom.sbs.item.list)\n" +
-				"/scoreboardshop:sbs item remove [category name] [item id]：移除指定种类下的物品(me.ltxom.sbs.item.remove)\n" +
-				"管理：\n" +
-				"\n" +
-				"/scoreboardshop:sbs reload：重载插件(me.ltxom.sbs.reload)\n" +
-				"用户\n" +
-				"\n" +
-				"/scoreboardshop:sbs shop：显示scoreboardshop商店(me.ltxom.sbs.shop)");
-		sender.spigot().sendMessage(help);
-	}
+    }
 }

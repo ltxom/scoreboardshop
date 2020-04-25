@@ -1,5 +1,5 @@
-name: LTXOM
-main: me.ltxom.scoreboardshop
+name: Scoreboardshop
+main: me.ltxom.scoreboardshop.ScoreBoardShop
 version: 1.0.0
 commands:
   sbs:

@@ -7,7 +7,7 @@
 #### 管理员
 ##### scoreboard：
 * /scoreboardshop:sbs link [scoreboard variable name] [display name]：使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称(me.ltxom.sbs.link)
-* /scoreboardshop:sbs unlink [scoreboard variable name]：使Minecraft scoreboard与scoreboard shop变量取消连接(me.ltxom.sbs.link.unlink)
+* /scoreboardshop:sbs unlink [scoreboard variable name]：使Minecraft scoreboard与scoreboard shop变量取消连接(me.ltxom.sbs.unlink)
 * /scoreboardshop:sbs link list：显示已建立的连接(me.ltxom.sbs.link.list)
 ##### 商店：
 * /scoreboardshop:sbs category create [category name] [display name] [display item]：创建商店中的类别，通过指定的显示名称与显示物品(me.ltxom.sbs.category.create)

@@ -1,0 +1,15 @@
+no-permission: You don't have %permission% permission
+
+link-help: Link Minecraft scoreboard with scoreboard shop by given variable name and display name
+unlink-help: Unlink Minecraft scoreboard with scoreboard shop
+link-list-help: List all links
+category-create-help: Create a category in the shop with given display name and display item
+category-remove-help: Remove the category in the scoreboard shop, ALL ITEMS IN THE CATEGORY WILL BE REMOVED
+category-list-help: List all categories
+item-create-help: "Create item in the given category by the given scoreboard variable, price, item type. Item type can be:"
+item-create-hand-help: Item from the hand and given amount
+item-create-command-help: Any command, use %p% to represent player name
+item-list-help: List all items in the given category
+item-remove-help: Remove an item in the given category
+reload-help: Reload scoreboard shop
+shop-help: Go to scoreboard shop
