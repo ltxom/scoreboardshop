@@ -4,7 +4,8 @@ public enum ResultCode {
 
 	CODE_OK(200, "Success"),
 	ERROR(404, "Error"),
-	SCOREBOARD_DNE(405, "Scoreboard doesn't exist")
+	SCOREBOARD_DNE(405, "Scoreboard doesn't exist"),
+	IO_EXCEPTION(406, "IO Exception")
 	;
 
 	private Integer code;

@@ -1,4 +1,8 @@
-no-permission: 你没有%permission%权限
+no-permission: 你没有权限
+exception: 发生了内部异常，请检查控制台记录来获取详细信息。
+scoreboard-DNE: 指定的Scoreboard不存在
+command-invalid: 指令或指令的参数不正确
+linked-scoreboard: 成功与Scoreboard变量建立连接
 
 link-help: 使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称
 unlink-help: 使Minecraft scoreboard与scoreboard shop变量取消连接

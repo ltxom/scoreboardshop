@@ -19,26 +19,32 @@ public class PromptService {
 	}
 
 	public void linkedScoreboard(CommandSender sender) {
-
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"linked-scoreboard"));
+		sender.spigot().sendMessage(textComponent);
 	}
 
 	public void commandInvalid(CommandSender sender) {
-
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"command-invalid"));
+		sender.spigot().sendMessage(textComponent);
 	}
 
 	public void noPermission(CommandSender sender) {
-
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"no-permission"));
+		sender.spigot().sendMessage(textComponent);
 	}
 
 
 	public void getHelp(CommandSender sender) {
 		List<TextComponent> toSendList = new LinkedList<>();
 		if (sender.hasPermission("me.ltxom.sbs.link")) {
-			TextComponent textComponent = new TextComponent("/sbs link  " + languageConfig.get(
+			TextComponent textComponent = new TextComponent("§b/sbs link  \n§a" + languageConfig.get(
 					"link-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs link"));
+					"§b/sbs link"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"link-help")).color(ChatColor.BLUE).create()));
@@ -46,11 +52,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.unlink")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs unlink  " + languageConfig.get(
+					new TextComponent("§b/sbs unlink  \n§a" + languageConfig.get(
 							"unlink-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs unlink"));
+					"§b/sbs unlink"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"unlink-help")).color(ChatColor.BLUE).create()));
@@ -58,11 +64,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.link.list")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs link list  " + languageConfig.get(
+					new TextComponent("§b/sbs link list  \n§a" + languageConfig.get(
 							"link-list-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs link list"));
+					"§b/sbs link list"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"link-list-help")).color(ChatColor.BLUE).create()));
@@ -70,11 +76,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.create")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs category create  " + languageConfig.get(
+					new TextComponent("§b/sbs category create  \n§a" + languageConfig.get(
 							"category-create-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs category create"));
+					"§b/sbs category create"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"category-create-help")).color(ChatColor.BLUE).create()));
@@ -82,11 +88,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs category remove  " + languageConfig.get(
+					new TextComponent("§b/sbs category remove  \n§a" + languageConfig.get(
 							"category-remove-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs category remove"));
+					"§b/sbs category remove"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"category-remove-help")).color(ChatColor.BLUE).create()));
@@ -94,11 +100,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.list")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs category list  " + languageConfig.get(
+					new TextComponent("§b/sbs category list  \n§a" + languageConfig.get(
 							"category-list-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs category list"));
+					"§b/sbs category list"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"category-list-help")).color(ChatColor.BLUE).create()));
@@ -106,11 +112,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.item.create")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs item create  " + languageConfig.get(
+					new TextComponent("§b/sbs item create  \n§a" + languageConfig.get(
 							"item-create-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs item create"));
+					"§b/sbs item create"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"item-create-help")).color(ChatColor.BLUE).create()));
@@ -119,11 +125,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.item.list")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs item list  " + languageConfig.get(
+					new TextComponent("§b/sbs item list  \n§a" + languageConfig.get(
 							"item-list-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs item list"));
+					"§b/sbs item list"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"item-list-help")).color(ChatColor.BLUE).create()));
@@ -131,11 +137,11 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs item remove  " + languageConfig.get(
+					new TextComponent("§b/sbs item remove  \n§a" + languageConfig.get(
 							"item-remove-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs item remove"));
+					"§b/sbs item remove"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"item-remove-help")).color(ChatColor.BLUE).create()));
@@ -143,22 +149,22 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.reload")) {
 			TextComponent textComponent =
-					new TextComponent("/sbs reload  " + languageConfig.get(
+					new TextComponent("§b/sbs reload  \n§a" + languageConfig.get(
 							"reload-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs reload"));
+					"§b/sbs reload"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"reload-help")).color(ChatColor.BLUE).create()));
 			toSendList.add(textComponent);
 		}
 		if (sender.hasPermission("me.ltxom.sbs.shop")) {
-			TextComponent textComponent = new TextComponent("/sbs shop  " + languageConfig.get(
+			TextComponent textComponent = new TextComponent("§b/sbs shop  \n§a" + languageConfig.get(
 					"shop-help"));
-			textComponent.setColor(ChatColor.GRAY);
+			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-					"/sbs shop"));
+					"§b/sbs shop"));
 			textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 					new ComponentBuilder((String) languageConfig.get(
 							"shop-help")).color(ChatColor.BLUE).create()));
@@ -171,5 +177,14 @@ public class PromptService {
 	}
 
 	public void scoreboardDNE(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"scoreboard-DNE"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void exception(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"exception"));
+		sender.spigot().sendMessage(textComponent);
 	}
 }
