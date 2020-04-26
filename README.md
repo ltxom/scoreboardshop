@@ -1,5 +1,6 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ltxom/scoreboardshop) 
-
+[![GitHub](https://img.shields.io/github/license/ltxom/scoreboardshop)](https://github.com/ltxom/scoreboardshop/blob/master/LICENSE)
+[![bukkit](https://img.shields.io/badge/spigot--api-1.15.2--R0.1--SNAPSHOT-informational)](https://hub.spigotmc.org/javadocs/spigot/overview-summary.html)
 # Scoreboard Shop
 
 ### 简介
