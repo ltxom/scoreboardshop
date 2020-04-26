@@ -161,7 +161,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							// Create a category
 							String categoryName = args[2];
 							String displayName = args[3];
-							String displayItem = args[4];
+							String displayItem = args[4].toUpperCase();
 							Material displayMaterial = Material.getMaterial(displayItem);
 							if (displayMaterial == null) {
 								promptService.materialDNE(sender);
@@ -218,9 +218,31 @@ public class ScoreBoardShop extends JavaPlugin {
 							// Create an item
 							String categoryName = args[2];
 							String scoreboardVarName = args[3];
-							Integer price = Integer.parseInt(args[4]);
-							String itemType = args[5];
-							String itemDesc = args[6];
+							Double price = Double.parseDouble(args[4]);
+							String itemDisplayName = args[5];
+							String itemLore = args[6];
+							String itemType = args[7];
+							String itemMaterial = args[8].toUpperCase();
+							String itemCommand = args[9];
+							ResultCode resultCode = shopService.createItem(sender, categoryName, scoreboardVarName,
+									price, itemDisplayName, itemLore, itemType, itemMaterial, itemCommand);
+							switch (resultCode) {
+								case CATEGORY_DNE:
+									promptService.categoryDNE(sender);
+									break;
+								case SCOREBOARD_DNE:
+									promptService.scoreboardDNE(sender);
+									break;
+								case ILLGEAL_ARG:
+									promptService.commandInvalid(sender);
+									break;
+								case ERROR:
+									promptService.onlyInGame(sender);
+									break;
+								case CODE_OK:
+									promptService.createdItem(sender);
+									break;
+							}
 						} else {
 							// prompt no permission
 							promptService.noPermission(sender);

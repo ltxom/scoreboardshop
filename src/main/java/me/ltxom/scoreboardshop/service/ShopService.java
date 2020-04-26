@@ -1,12 +1,17 @@
 package me.ltxom.scoreboardshop.service;
 
+import me.ltxom.scoreboardshop.entity.ShopItem;
 import me.ltxom.scoreboardshop.util.ResultCode;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class ShopService {
@@ -55,6 +60,53 @@ public class ShopService {
 					);
 			sender.spigot().sendMessage(textComponent);
 		}
+	}
+
+	public ResultCode createItem(CommandSender sender, String categoryName, String scoreboardVarName, Double price,
+								 String itemDisplayName,
+								 String itemLore, String itemType, String material,
+								 String itemCommand) {
+		if (!shopConfig.contains(categoryName)) {
+			return ResultCode.CATEGORY_DNE;
+		}
+		if (!scoreboardConfig.contains(scoreboardVarName)) {
+			return ResultCode.SCOREBOARD_DNE;
+		}
+		if (price < 0) {
+			return ResultCode.ILLGEAL_ARG;
+		}
+		if (shopConfig.get(categoryName + ".items") == null) {
+			shopConfig.set((categoryName + ".items"), new ArrayList<ShopItem>());
+		}
+		ShopItem shopItem = new ShopItem();
+		shopItem.setCategoryName(categoryName);
+		shopItem.setDisplayName(itemDisplayName);
+		shopItem.setScoreboardVarName(scoreboardVarName);
+		shopItem.setPrice(price);
+		shopItem.setLore(itemLore);
+		ArrayList list = (ArrayList) shopConfig.get(categoryName + ".items");
+		if (itemType.toLowerCase().equals("hand")) {
+			if (sender instanceof Player) {
+				Player player = (Player) sender;
+				ItemStack itemStack = player.getInventory().getItemInMainHand();
+				shopItem.setItemStack(itemStack);
+			} else {
+				return ResultCode.ERROR;
+			}
+		} else if (itemType.toLowerCase().equals("command")) {
+			shopItem.setItemCommand(itemCommand);
+			shopItem.setMaterial(material);
+		} else {
+			return ResultCode.ILLGEAL_ARG;
+		}
+		list.add(shopItem);
+		shopConfig.set((categoryName + ".items"), list);
+		try {
+			shopConfig.save(shopConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ResultCode.CODE_OK;
 	}
 }
 

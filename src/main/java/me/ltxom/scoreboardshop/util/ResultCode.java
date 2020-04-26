@@ -12,7 +12,10 @@ public enum ResultCode {
 	SCOREBOARD_DNE(405, "Scoreboard doesn't exist"),
 	IO_EXCEPTION(406, "IO Exception"),
 	DNE(407, "DNE"),
-	EXIST(408, "Field already exist")
+	EXIST(408, "Field already exist"),
+	ILLGEAL_ARG(409, "Illegal argument"),
+	CATEGORY_DNE(410, "Category DNE"),
+
 	;
 
 	private Integer code;

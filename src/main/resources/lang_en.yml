@@ -10,6 +10,9 @@ category-removed: Successfully removed category!
 category-dne: Category does not exist!
 only-ingame: This command can be only executed in game
 material-dne: The given material is not valid. (Type /itemdb to check item name)
+item-created: Successfully created item!
+item-removed: Successfully removed item!
+
 scoreboard-var: Scoreboard variable
 display-name: Display name
 category-name: Category

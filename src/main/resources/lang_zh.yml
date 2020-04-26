@@ -10,6 +10,8 @@ category-removed: 成功移除类别
 category-dne: 指定的类别不存在
 only-ingame: 该指令只能在游戏中执行
 material-dne: 物品名称无效（使用/itemdb查询手中物品名称）
+item-created: 成功新建物品
+item-removed: 成功移除物品
 
 scoreboard-var: Scoreboard变量
 display-name: 显示名称

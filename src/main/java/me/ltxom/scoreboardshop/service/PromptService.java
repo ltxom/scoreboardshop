@@ -229,4 +229,10 @@ public class PromptService {
 				"material-dne"));
 		sender.spigot().sendMessage(textComponent);
 	}
+
+	public void createdItem(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"item-created"));
+		sender.spigot().sendMessage(textComponent);
+	}
 }
