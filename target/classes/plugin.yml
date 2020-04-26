@@ -1,0 +1,18 @@
+name: Scoreboardshop
+main: me.ltxom.scoreboardshop.ScoreBoardShop
+version: 1.0.0
+api-version: 1.15
+commands:
+  sbs:
+    usage: |
+      /<command> link <scoreboard variable name> <display name> -- 使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称
+      /<command> unlink <scoreboard variable name> -- 使Minecraft scoreboard与scoreboard shop变量取消连接
+      /<command> link list -- 显示已建立的连接
+      /<command> category create <category name> <display name> <display item> -- 创建商店中的类别，通过指定的显示名称与显示物品
+      /<command> category remove <category name> -- 移除商店中的类别，类别下的物品也会被移除
+      /<command> category list -- 显示所有类别，包括其类别名称、显示名称
+      /<command> item create <category name> <scoreboard variable name> <price> <item type> <item desc> -- 创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性
+      /<command> item list <category name> -- 显示指定种类下所有的物品，包括物品id、scoreboard变量、价格、物品种类、以及附加属性
+      /<command> item remove <category name> <item id> -- 移除指定种类下的物品
+      /<command> reload -- 重载插件
+      /<command> shop -- 显示scoreboardshop商店
