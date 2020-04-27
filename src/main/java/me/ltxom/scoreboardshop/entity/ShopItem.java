@@ -1,6 +1,16 @@
 package me.ltxom.scoreboardshop.entity;
 
+import com.google.gson.Gson;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ShopItem {
 	private String displayName;
@@ -13,6 +23,39 @@ public class ShopItem {
 	private String itemCommand;
 	private String material;
 
+	private FileConfiguration fileConfiguration = new YamlConfiguration();
+
+	public ShopItem() {
+	}
+
+	public ShopItem(String string, ItemStack itemStack) {
+		if (string.startsWith("ShopItem{")) {
+			displayName = string.split("displayName='")[1].split("'")[0];
+			scoreboardVarName = string.split(", scoreboardVarName='")[1].split("'")[0];
+			lore = string.split(", lore='")[1].split("'")[0];
+			itemType = string.split(", itemType='")[1].split("'")[0];
+			categoryName = string.split(", categoryName='")[1].split("'")[0];
+			price = Double.parseDouble(string.split(", price=")[1].split(",")[0]);
+			itemCommand = string.split(", itemCommand='")[1].split("'")[0];
+			material = string.split(", material='")[1].split("'")[0];
+			this.itemStack = itemStack;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "ShopItem{" +
+				"displayName='" + displayName + '\'' +
+				", scoreboardVarName='" + scoreboardVarName + '\'' +
+				", lore='" + lore + '\'' +
+				", itemType='" + itemType + '\'' +
+				", categoryName='" + categoryName + '\'' +
+				", price=" + price +
+				", itemCommand='" + itemCommand + '\'' +
+				", material='" + material + '\'' +
+				'}';
+	}
+
 	public String getMaterial() {
 		return material;
 	}
@@ -20,6 +63,7 @@ public class ShopItem {
 	public void setMaterial(String material) {
 		this.material = material;
 	}
+
 
 	public String getScoreboardVarName() {
 		return scoreboardVarName;
@@ -74,6 +118,15 @@ public class ShopItem {
 	}
 
 	public void setItemStack(ItemStack itemStack) {
+		itemStack = itemStack.clone();
+		ItemMeta itemMeta = itemStack.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		List list = new ArrayList();
+		for (String str : lore.split("\n")) {
+			list.add(str);
+		}
+		itemMeta.setLore(list);
+		itemStack.setItemMeta(itemMeta);
 		this.itemStack = itemStack;
 	}
 

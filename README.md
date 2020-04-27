@@ -16,10 +16,10 @@
 * /scoreboardshop:sbs category create [category name] [display name] [display item]：创建商店中的类别，通过指定的显示名称与显示物品(me.ltxom.sbs.category.create)
 * /scoreboardshop:sbs category remove [category name]：移除商店中的类别，类别下的物品也会被移除(me.ltxom.sbs.category.remove)
 * /scoreboardshop:sbs category list：显示所有类别，包括其类别名称、显示名称
-* /scoreboardshop:sbs item create [category name] [scoreboard variable name] [price] [item type] [item desc]：创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性(me.ltxom.sbs.item.create)
-    - 物品种类[item type]以及其附加属性[item desc]
+* /scoreboardshop:sbs item create [category name] [scoreboard variable name] [price] [item type] [additional attributes]：创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性(me.ltxom.sbs.item.create)
+    - [item type] [additional attributes]
     1. [HAND] [NUMBER]：从手中的物品创建并指定数量
-    2. [Command]：执行任意指令，使用%p%代表玩家名
+    2. [Command] [item material] [command]：执行任意指令，使用%p%代表玩家名
 * /scoreboardshop:sbs item list [category name]：显示指定种类下所有的物品，包括物品id、scoreboard变量、价格、物品种类、以及附加属性(me.ltxom.sbs.item.list)
 * /scoreboardshop:sbs item remove [category name] [item id]：移除指定种类下的物品(me.ltxom.sbs.item.remove)
 ##### 管理：

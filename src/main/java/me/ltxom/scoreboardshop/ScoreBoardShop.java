@@ -216,14 +216,19 @@ public class ScoreBoardShop extends JavaPlugin {
 					if (args[1].equals("create")) {
 						if (sender.hasPermission("me.ltxom.sbs.item.create")) {
 							// Create an item
+
 							String categoryName = args[2];
 							String scoreboardVarName = args[3];
 							Double price = Double.parseDouble(args[4]);
 							String itemDisplayName = args[5];
 							String itemLore = args[6];
-							String itemType = args[7];
-							String itemMaterial = args[8].toUpperCase();
-							String itemCommand = args[9];
+							String itemType = args[7];// hand or command
+							String itemMaterial = null;
+							String itemCommand = null;
+							if (itemType.equals("COMMAND")) {
+								itemMaterial = args[8].toUpperCase(); // itemType is hand
+								itemCommand = args[9]; // itemType is command
+							}
 							ResultCode resultCode = shopService.createItem(sender, categoryName, scoreboardVarName,
 									price, itemDisplayName, itemLore, itemType, itemMaterial, itemCommand);
 							switch (resultCode) {
@@ -249,8 +254,16 @@ public class ScoreBoardShop extends JavaPlugin {
 						}
 					} else if (args[1].equals("list")) {
 						if (sender.hasPermission("me.ltxom.sbs.item.list")) {
-							// List an item
+							// List all item
 							String categoryName = args[2];
+							ResultCode resultCode = shopService.listItem(sender, categoryName);
+							switch (resultCode) {
+								case CODE_OK:
+									break;
+								case CATEGORY_DNE:
+									promptService.categoryDNE(sender);
+									break;
+							}
 						} else {
 							// prompt no permission
 							promptService.noPermission(sender);
@@ -260,6 +273,18 @@ public class ScoreBoardShop extends JavaPlugin {
 							// Remove an item
 							String categoryName = args[2];
 							Integer itemID = Integer.parseInt(args[3]);
+							ResultCode resultCode = shopService.removeItem(categoryName, itemID);
+							switch (resultCode){
+								case CATEGORY_DNE:
+									promptService.categoryDNE(sender);
+									break;
+								case DNE:
+									promptService.itemIDDNE(sender);
+									break;
+								case CODE_OK:
+									promptService.removedItem(sender);
+									break;
+							}
 						} else {
 							// prompt no permission
 							promptService.noPermission(sender);
@@ -288,7 +313,7 @@ public class ScoreBoardShop extends JavaPlugin {
 					// Incorrect command || No Permission
 					promptService.commandInvalid(sender);
 				}
-			} catch (ArrayIndexOutOfBoundsException e) {
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				e.printStackTrace();
 				promptService.commandInvalid(sender);
 			}

@@ -11,7 +11,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Set;
 
 public class ShopService {
@@ -47,6 +46,11 @@ public class ShopService {
 			return ResultCode.DNE;
 		}
 		shopConfig.set(categoryName, null);
+		try {
+			shopConfig.save(shopConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return ResultCode.CODE_OK;
 	}
 
@@ -75,16 +79,22 @@ public class ShopService {
 		if (price < 0) {
 			return ResultCode.ILLGEAL_ARG;
 		}
-		if (shopConfig.get(categoryName + ".items") == null) {
-			shopConfig.set((categoryName + ".items"), new ArrayList<ShopItem>());
+
+		String nextItemIndex;
+		Set<String> keys = shopConfig.getKeys(true);
+
+		int counter = 1;
+		while (keys.contains(categoryName + ".items.item-" + counter)) {
+			counter++;
 		}
+		nextItemIndex = "item-" + counter;
 		ShopItem shopItem = new ShopItem();
 		shopItem.setCategoryName(categoryName);
 		shopItem.setDisplayName(itemDisplayName);
 		shopItem.setScoreboardVarName(scoreboardVarName);
 		shopItem.setPrice(price);
 		shopItem.setLore(itemLore);
-		ArrayList list = (ArrayList) shopConfig.get(categoryName + ".items");
+		shopItem.setItemType(itemType);
 		if (itemType.toLowerCase().equals("hand")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
@@ -99,8 +109,64 @@ public class ShopService {
 		} else {
 			return ResultCode.ILLGEAL_ARG;
 		}
-		list.add(shopItem);
-		shopConfig.set((categoryName + ".items"), list);
+		shopConfig.set((categoryName + ".items." + nextItemIndex + ".shopitem"), shopItem.toString());
+		shopConfig.set((categoryName + ".items." + nextItemIndex + ".itemstack"), shopItem.getItemStack());
+
+		try {
+			shopConfig.save(shopConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ResultCode.CODE_OK;
+	}
+
+	public ResultCode listItem(CommandSender sender, String categoryName) {
+		if (!shopConfig.contains(categoryName)) {
+			return ResultCode.CATEGORY_DNE;
+		}
+		Set<String> keys = shopConfig.getKeys(true);
+
+		String nextItemIndex;
+		int counter = 1;
+		while (keys.contains(categoryName + ".items.item-" + counter)) {
+			nextItemIndex = "item-" + counter;
+			ShopItem shopItem = new ShopItem(shopConfig.getString((categoryName + ".items." + nextItemIndex +
+					".shopitem")), shopConfig.getItemStack((categoryName + ".items." + nextItemIndex +
+					".itemstack")));
+			sender.spigot().sendMessage(new TextComponent("§d" + languageConfig.get("item-id") + ": §a" + counter +
+					" §d" + languageConfig.get("item-name") + ": §a" + shopItem.getDisplayName()));
+			counter++;
+		}
+		return ResultCode.CODE_OK;
+	}
+
+	public ResultCode removeItem(String categoryName, Integer itemID) {
+		if (!shopConfig.contains(categoryName)) {
+			return ResultCode.CATEGORY_DNE;
+		}
+		Set<String> keys = shopConfig.getKeys(true);
+		int counter = itemID;
+		if (!keys.contains(categoryName + ".items.item-" + counter)) {
+			return ResultCode.DNE;
+		}
+		shopConfig.set(categoryName + ".items.item-" + counter, null);
+		counter++;
+		boolean changed = false;
+		while (keys.contains(categoryName + ".items.item-" + counter)) {
+			changed = true;
+			String itemIndex = "item-" + counter;
+			ShopItem shopItem = new ShopItem(shopConfig.getString((categoryName + ".items." + itemIndex +
+					".shopitem")), shopConfig.getItemStack((categoryName + ".items." + itemIndex +
+					".itemstack")));
+			String preItemIndex = "item-" + (counter - 1);
+			shopConfig.set((categoryName + ".items." + preItemIndex + ".shopitem"), shopItem.toString());
+			shopConfig.set((categoryName + ".items." + preItemIndex + ".itemstack"), shopItem.getItemStack());
+			counter++;
+		}
+		if (changed) {
+			counter--;
+			shopConfig.set(categoryName + ".items.item-" + counter, null);
+		}
 		try {
 			shopConfig.save(shopConfigFile);
 		} catch (IOException e) {

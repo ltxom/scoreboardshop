@@ -40,7 +40,7 @@ public class PromptService {
 	public void getHelp(CommandSender sender) {
 		List<TextComponent> toSendList = new LinkedList<>();
 		if (sender.hasPermission("me.ltxom.sbs.link")) {
-			TextComponent textComponent = new TextComponent("§b/sbs link  \n§a" + languageConfig.get(
+			TextComponent textComponent = new TextComponent("§b/sbs link  §a" + languageConfig.get(
 					"link-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -52,7 +52,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.unlink")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs unlink  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs unlink  §a" + languageConfig.get(
 							"unlink-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -64,7 +64,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.link.list")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs link list  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs link list  §a" + languageConfig.get(
 							"link-list-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -76,7 +76,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.create")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs category create  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs category create  §a" + languageConfig.get(
 							"category-create-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -88,7 +88,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.remove")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs category remove  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs category remove  §a" + languageConfig.get(
 							"category-remove-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -100,7 +100,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.list")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs category list  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs category list  §a" + languageConfig.get(
 							"category-list-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -112,7 +112,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.category.item.create")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs item create  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs item create  §a" + languageConfig.get(
 							"item-create-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -125,7 +125,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.item.list")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs item list  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs item list  §a" + languageConfig.get(
 							"item-list-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -137,7 +137,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.item.remove")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs item remove  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs item remove  §a" + languageConfig.get(
 							"item-remove-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -149,7 +149,7 @@ public class PromptService {
 		}
 		if (sender.hasPermission("me.ltxom.sbs.reload")) {
 			TextComponent textComponent =
-					new TextComponent("§b/sbs reload  \n§a" + languageConfig.get(
+					new TextComponent("§b/sbs reload  §a" + languageConfig.get(
 							"reload-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -160,7 +160,7 @@ public class PromptService {
 			toSendList.add(textComponent);
 		}
 		if (sender.hasPermission("me.ltxom.sbs.shop")) {
-			TextComponent textComponent = new TextComponent("§b/sbs shop  \n§a" + languageConfig.get(
+			TextComponent textComponent = new TextComponent("§b/sbs shop  §a" + languageConfig.get(
 					"shop-help"));
 			
 			textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
@@ -233,6 +233,18 @@ public class PromptService {
 	public void createdItem(CommandSender sender) {
 		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
 				"item-created"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void itemIDDNE(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§c" + languageConfig.get(
+				"item-dne"));
+		sender.spigot().sendMessage(textComponent);
+	}
+
+	public void removedItem(CommandSender sender) {
+		TextComponent textComponent = new TextComponent("§a" + languageConfig.get(
+				"item-removed"));
 		sender.spigot().sendMessage(textComponent);
 	}
 }

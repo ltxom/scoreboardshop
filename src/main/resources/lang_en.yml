@@ -12,22 +12,23 @@ only-ingame: This command can be only executed in game
 material-dne: The given material is not valid. (Type /itemdb to check item name)
 item-created: Successfully created item!
 item-removed: Successfully removed item!
+item-dne: Item doesn't exist!
 
 scoreboard-var: Scoreboard variable
 display-name: Display name
 category-name: Category
 close: Close
+item-id: Item ID
+item-name: Item Name
 
-link-help: Link Minecraft scoreboard with scoreboard shop by given variable name and display name
-unlink-help: Unlink Minecraft scoreboard with scoreboard shop
-link-list-help: List all links
-category-create-help: Create a category in the shop with given display name and display item
-category-remove-help: Remove the category in the scoreboard shop, ALL ITEMS IN THE CATEGORY WILL BE REMOVED
-category-list-help: List all categories
-item-create-help: "Create item in the given category by the given scoreboard variable, price, item type. Item type can be:"
-item-create-hand-help: Item from the hand and given amount
-item-create-command-help: Any command, use %p% to represent player name
-item-list-help: List all items in the given category
-item-remove-help: Remove an item in the given category
-reload-help: Reload scoreboard shop
-shop-help: Go to scoreboard shop
+link-help:  "§c[scoreboard variable name] [display name] \n §a Link Minecraft scoreboard with scoreboard shop by given variable name and display name"
+unlink-help:  "§c[scoreboard variable name] \n §a Unlink Minecraft scoreboard with scoreboard shop"
+link-list-help: "\n §aList all links"
+category-create-help: "§c[category name] [display name] [display item] \n §a Create a category in the shop with given display name and display item"
+category-remove-help: "§c[category name] \n §a Remove the category in the scoreboard shop, ALL ITEMS IN THE CATEGORY WILL BE REMOVED"
+category-list-help: "\n §aList all categories"
+item-create-help: "§c[category name] [scoreboard variable name] [price] [display name] [lore] [item type] [additional attributes] \n §a Create item in the given category by the given scoreboard variable, price, item type. \n §d[item type] §e[additional attributes]:\n §a1.§d HAND §e[NUMBER]§a create from hand with given number \n 2.§d Command§e [item material] [command]§a any command (with backslash) use %p% as player name"
+item-list-help:  "§c[category name] \n §a List all items in the given category"
+item-remove-help:  "§c[category name] [item id] \n §a Remove an item in the given category"
+reload-help: "\n §aReload scoreboard shop"
+shop-help: "\n §aDisplay scoreboard shop"
