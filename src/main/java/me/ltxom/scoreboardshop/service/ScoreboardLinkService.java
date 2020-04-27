@@ -8,7 +8,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Set;
 
 public class ScoreboardLinkService {
@@ -41,6 +40,10 @@ public class ScoreboardLinkService {
 
 	public void listAllLinks(CommandSender sender) {
 		Set<String> keys = scoreboardConfig.getKeys(false);
+		if (keys.isEmpty()) {
+			sender.sendMessage("§c" + languageConfig.get("no-link").toString());
+			return;
+		}
 		for (String key : keys) {
 			String value = scoreboardConfig.get(key).toString();
 			TextComponent textComponent =

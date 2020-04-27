@@ -21,13 +21,13 @@ import java.util.Objects;
 public class ScoreBoardShop extends JavaPlugin {
 
 	private static final String PREFIX = "[ScoreBoardShop]";
+	private static ScoreboardManager scoreboardManager;
 	private static FileConfiguration config;
 	private static FileConfiguration languageConfig;
 	private static FileConfiguration scoreboardConfig;
 	private static FileConfiguration shopConfig;
 	private static File shopConfigFile;
 	private static File scoreboardConfigFile;
-	private static ScoreboardManager scoreboardManager;
 	private static ScoreboardLinkService scoreboardLinkService;
 	private static PromptService promptService;
 	private static ShopService shopService;
@@ -219,18 +219,26 @@ public class ScoreBoardShop extends JavaPlugin {
 
 							String categoryName = args[2];
 							String scoreboardVarName = args[3];
-							Double price = Double.parseDouble(args[4]);
+							double price = Integer.parseInt(args[4]);
 							String itemDisplayName = args[5];
 							String itemLore = args[6];
-							String itemType = args[7];// hand or command
+							String itemType = args[7].toUpperCase();// hand or command
 							String itemMaterial = null;
 							String itemCommand = null;
+							Integer itemNumber = null;
 							if (itemType.equals("COMMAND")) {
 								itemMaterial = args[8].toUpperCase(); // itemType is hand
-								itemCommand = args[9]; // itemType is command
+								StringBuilder stringBuilder = new StringBuilder();
+								for (int i = 9; i < args.length; i++) {
+									stringBuilder.append(args[i]).append(" ");
+								}
+								itemCommand = stringBuilder.toString(); // itemType is command
+							}
+							if (itemType.equals("HAND")) {
+								itemNumber = Integer.parseInt(args[8]);
 							}
 							ResultCode resultCode = shopService.createItem(sender, categoryName, scoreboardVarName,
-									price, itemDisplayName, itemLore, itemType, itemMaterial, itemCommand);
+									price, itemDisplayName, itemLore, itemType, itemNumber, itemMaterial, itemCommand);
 							switch (resultCode) {
 								case CATEGORY_DNE:
 									promptService.categoryDNE(sender);
@@ -245,7 +253,11 @@ public class ScoreBoardShop extends JavaPlugin {
 									promptService.onlyInGame(sender);
 									break;
 								case CODE_OK:
+									shopInventory.reloadGui();
 									promptService.createdItem(sender);
+									break;
+								case DNE:
+									promptService.materialDNE(sender);
 									break;
 							}
 						} else {
@@ -274,7 +286,7 @@ public class ScoreBoardShop extends JavaPlugin {
 							String categoryName = args[2];
 							Integer itemID = Integer.parseInt(args[3]);
 							ResultCode resultCode = shopService.removeItem(categoryName, itemID);
-							switch (resultCode){
+							switch (resultCode) {
 								case CATEGORY_DNE:
 									promptService.categoryDNE(sender);
 									break;
@@ -282,6 +294,7 @@ public class ScoreBoardShop extends JavaPlugin {
 									promptService.itemIDDNE(sender);
 									break;
 								case CODE_OK:
+									shopInventory.reloadGui();
 									promptService.removedItem(sender);
 									break;
 							}
@@ -293,6 +306,9 @@ public class ScoreBoardShop extends JavaPlugin {
 				} else if (args[0].equals("reload")) {
 					if (sender.hasPermission("me.ltxom.sbs.reload")) {
 						// Reload
+						loadConfig();
+						shopInventory.reloadGui();
+
 					} else {
 						// prompt no permission
 						promptService.noPermission(sender);
@@ -314,7 +330,6 @@ public class ScoreBoardShop extends JavaPlugin {
 					promptService.commandInvalid(sender);
 				}
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				e.printStackTrace();
 				promptService.commandInvalid(sender);
 			}
 		}

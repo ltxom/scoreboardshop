@@ -13,6 +13,8 @@ material-dne: 物品名称无效（使用/itemdb查询手中物品名称）
 item-created: 成功新建物品
 item-removed: 成功移除物品
 item-dne: 物品不存在
+no-enough-score: 无法购买！没有足够的分数
+no-link: 没有Scoreboard连接，使用/sbs link创建
 
 scoreboard-var: Scoreboard变量
 display-name: 显示名称
@@ -20,6 +22,8 @@ category-name: 类别
 close: 关闭
 item-id: 物品ID
 item-name: 物品名称
+price: 价格
+amount: 数量
 
 link-help: "§c[scoreboard变量名] [显示名称] \n §a 使Minecraft scoreboard与scoreboard shop变量连接，并赋予显示名称"
 unlink-help: "§c[scoreboard变量名] \n §a 使Minecraft scoreboard与scoreboard shop变量取消连接"
@@ -27,7 +31,7 @@ link-list-help: "\n §a显示已建立的连接"
 category-create-help: "§c[类别] [显示名称] [显示物品] \n §a 创建商店中的类别，通过指定的显示名称与显示物品"
 category-remove-help: "§c[类别] \n §a 移除商店中的类别，类别下的物品也会被移除"
 category-list-help: "\n §a显示所有类别，包括其类别名称、显示名称"
-item-create-help: "§c[类别] [已连接的scoreboard变量] [价格] [物品类型] [显示名称] [物品描述] [额外属性] \n §a 创建商品，指定类别、scoreboard变量、价格、物品类型、以及附加属性。\n §d[物品类型] §e[额外属性]:\n §a1. §dHAND §e[数量] §a从手中创建指定数量的物品 \n 2. §dCommand §e[显示物品] [指令] §a任意指令需斜杠，使用%p%代表玩家名"
+item-create-help: "§c[类别] [已连接的scoreboard变量] [价格] [显示名称] [物品描述] [额外属性] \n §a 在类别下创建商品，使用下划线来代替显示名称和介绍中的空格。\n §d[物品类型] §e[额外属性]:\n §a1. §dHAND §e[数量] §a从手中创建指定数量的物品 \n 2. §dCommand §e[显示物品] [指令] §a任意指令需斜杠，使用%p%代表玩家名"
 item-list-help:  "§c[类别] \n §a 列出指定类别下的所有物品"
 item-remove-help: "§c[类别] [item id] \n §a 移除指定类别下的物品"
 reload-help: "\n §a重载插件"

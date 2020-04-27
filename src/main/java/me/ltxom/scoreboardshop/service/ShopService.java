@@ -3,6 +3,7 @@ package me.ltxom.scoreboardshop.service;
 import me.ltxom.scoreboardshop.entity.ShopItem;
 import me.ltxom.scoreboardshop.util.ResultCode;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -68,7 +69,7 @@ public class ShopService {
 
 	public ResultCode createItem(CommandSender sender, String categoryName, String scoreboardVarName, Double price,
 								 String itemDisplayName,
-								 String itemLore, String itemType, String material,
+								 String itemLore, String itemType, Integer itemNumber, String material,
 								 String itemCommand) {
 		if (!shopConfig.contains(categoryName)) {
 			return ResultCode.CATEGORY_DNE;
@@ -80,6 +81,7 @@ public class ShopService {
 			return ResultCode.ILLGEAL_ARG;
 		}
 
+
 		String nextItemIndex;
 		Set<String> keys = shopConfig.getKeys(true);
 
@@ -90,22 +92,28 @@ public class ShopService {
 		nextItemIndex = "item-" + counter;
 		ShopItem shopItem = new ShopItem();
 		shopItem.setCategoryName(categoryName);
-		shopItem.setDisplayName(itemDisplayName);
+		shopItem.setDisplayName(itemDisplayName.replace("_", " "));
 		shopItem.setScoreboardVarName(scoreboardVarName);
 		shopItem.setPrice(price);
-		shopItem.setLore(itemLore);
+		shopItem.setLore(itemLore.replace("_", " "));
 		shopItem.setItemType(itemType);
 		if (itemType.toLowerCase().equals("hand")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
 				ItemStack itemStack = player.getInventory().getItemInMainHand();
-				shopItem.setItemStack(itemStack);
+				shopItem.setLore(shopItem.getLore() + "__ §d" + languageConfig.get("price") + ": §e" + price + scoreboardConfig.get(scoreboardVarName) + "__ §d" + languageConfig.get("amount") + ": §e" + itemNumber);
+				shopItem.setItemStack(itemStack, itemNumber);
 			} else {
 				return ResultCode.ERROR;
 			}
 		} else if (itemType.toLowerCase().equals("command")) {
+			if (Material.getMaterial(material) == null) {
+				return ResultCode.DNE;
+			}
 			shopItem.setItemCommand(itemCommand);
 			shopItem.setMaterial(material);
+			shopItem.setLore(shopItem.getLore() + "__ §d" + languageConfig.get("price") + ": §e" + price + scoreboardConfig.get(scoreboardVarName));
+
 		} else {
 			return ResultCode.ILLGEAL_ARG;
 		}

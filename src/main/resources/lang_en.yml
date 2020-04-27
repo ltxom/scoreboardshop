@@ -13,6 +13,8 @@ material-dne: The given material is not valid. (Type /itemdb to check item name)
 item-created: Successfully created item!
 item-removed: Successfully removed item!
 item-dne: Item doesn't exist!
+no-enough-score: You don't have enough score to buy it!
+no-link: No scoreboad link yet. Use /sbs link to create one!
 
 scoreboard-var: Scoreboard variable
 display-name: Display name
@@ -20,6 +22,8 @@ category-name: Category
 close: Close
 item-id: Item ID
 item-name: Item Name
+price: Price
+amount: Amount
 
 link-help:  "§c[scoreboard variable name] [display name] \n §a Link Minecraft scoreboard with scoreboard shop by given variable name and display name"
 unlink-help:  "§c[scoreboard variable name] \n §a Unlink Minecraft scoreboard with scoreboard shop"
@@ -27,7 +31,7 @@ link-list-help: "\n §aList all links"
 category-create-help: "§c[category name] [display name] [display item] \n §a Create a category in the shop with given display name and display item"
 category-remove-help: "§c[category name] \n §a Remove the category in the scoreboard shop, ALL ITEMS IN THE CATEGORY WILL BE REMOVED"
 category-list-help: "\n §aList all categories"
-item-create-help: "§c[category name] [scoreboard variable name] [price] [display name] [lore] [item type] [additional attributes] \n §a Create item in the given category by the given scoreboard variable, price, item type. \n §d[item type] §e[additional attributes]:\n §a1.§d HAND §e[NUMBER]§a create from hand with given number \n 2.§d Command§e [item material] [command]§a any command (with backslash) use %p% as player name"
+item-create-help: "§c[category name] [scoreboard variable name] [price] [display name] [lore] [item type] [additional attributes] \n §a Create item in the given category, use '_' to represent space in display name and lore. \n §d[item type] §e[additional attributes]:\n §a1.§d HAND §e[NUMBER]§a create from hand with given number \n 2.§d Command§e [item material] [command]§a any command (with backslash) use %p% as player name"
 item-list-help:  "§c[category name] \n §a List all items in the given category"
 item-remove-help:  "§c[category name] [item id] \n §a Remove an item in the given category"
 reload-help: "\n §aReload scoreboard shop"

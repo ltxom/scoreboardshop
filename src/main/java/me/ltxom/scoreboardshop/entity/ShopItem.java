@@ -117,8 +117,9 @@ public class ShopItem {
 		return itemStack;
 	}
 
-	public void setItemStack(ItemStack itemStack) {
+	public void setItemStack(ItemStack itemStack, Integer itemNumber) {
 		itemStack = itemStack.clone();
+		itemStack.setAmount(itemNumber);
 		ItemMeta itemMeta = itemStack.getItemMeta();
 		itemMeta.setDisplayName(displayName);
 		List list = new ArrayList();
